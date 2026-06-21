@@ -1,0 +1,22 @@
+spring:
+  jpa:
+    show-sql: true
+
+  # Override mail to use local Mailpit (docker-compose)
+  # Open http://localhost:8025 to read sent emails
+  mail:
+    host: localhost
+    port: 1025
+    username: ''
+    password: ''
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+logging:
+  level:
+    com.cronitor: DEBUG
+    org.hibernate.SQL: DEBUG

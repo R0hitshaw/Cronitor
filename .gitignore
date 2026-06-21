@@ -1,0 +1,30 @@
+# ==========================================
+# Java / Maven Backend
+# ==========================================
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!mvnw
+!mvnw.cmd
+
+# Maven local configuration overrides
+.mvn/
+*.versionsBackup
+
+# ==========================================
+# IDEs & System Files
+# ==========================================
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Eclipse (if any team members use it)
+.classpath
+.env
+.project
+.settings/
+
+# OS Clutter
+.DS_Store
+Thumbs.db
