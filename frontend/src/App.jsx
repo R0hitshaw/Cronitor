@@ -1,5 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider, useAuth } from './api/AuthContext'
+import Channels from './pages/Channels'
+import { Navigate } from 'react-router-dom'
+import Setting from './pages/Setting'
 import ProtectedRoute from './components/ProtectedRoute'
 import Sidebar from './components/Sidebar'
 import Landing from './pages/Landing'
@@ -21,7 +24,7 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Public */}
-      <Route path="/" element={user ? null : <Landing />} />
+      <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <Landing />}/>
 
       {/* Protected — all wrapped in sidebar layout */}
       <Route path="/dashboard" element={
@@ -37,6 +40,16 @@ function AppRoutes() {
       <Route path="/alerts" element={
         <ProtectedRoute>
           <AppLayout><Alerts /></AppLayout>
+        </ProtectedRoute>
+      }/>
+      <Route path="/channels" element={
+        <ProtectedRoute>
+          <AppLayout><Channels /></AppLayout>
+        </ProtectedRoute>
+      }/>
+      <Route path="/settings" element={
+        <ProtectedRoute>
+          <AppLayout><Setting /></AppLayout>
         </ProtectedRoute>
       }/>
     </Routes>

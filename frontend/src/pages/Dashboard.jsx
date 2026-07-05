@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import ChannelModal from '../components/ChannelModal'
 import { Link, useNavigate } from 'react-router-dom'
 import { getJobs, registerJob, deleteJob, pingStart, pingFinish, pingFail } from '../api/client'
 import StatusBadge from '../components/StatusBadge'
@@ -17,6 +18,7 @@ export default function Dashboard() {
   const [error, setError] = useState('')
   const [pinging, setPinging] = useState(null)
   const [activity, setActivity] = useState([])
+  const [channelModal, setChannelModal] = useState(null)
   const navigate = useNavigate()
 
   const load = async () => {
@@ -33,8 +35,14 @@ export default function Dashboard() {
   const handleSubmit = async (e) => {
     e.preventDefault(); setError('')
     try {
-      await registerJob({ ...form, gracePeriodSeconds: Number(form.gracePeriodSeconds) })
-      setShowForm(false); setForm(emptyForm); load()
+      const res = await registerJob({ ...form, gracePeriodSeconds: Number(form.gracePeriodSeconds) })
+
+//       console.log("Backend Response Payload:", res.data)
+      const newJob = res.data  // capture the response
+      setShowForm(false)
+      setForm(emptyForm)
+      load()
+      setChannelModal({ id: newJob.id, name: newJob.name })
     } catch (err) { setError(err.response?.data?.detail || 'Failed to register job') }
   }
 
@@ -220,6 +228,13 @@ export default function Dashboard() {
           </div>
         </>
       )}
+    {channelModal && (
+      <ChannelModal
+        jobId={channelModal.id}
+        jobName={channelModal.name}
+        onClose={() => setChannelModal(null)}
+      />
+    )}
     </div>
   )
 }

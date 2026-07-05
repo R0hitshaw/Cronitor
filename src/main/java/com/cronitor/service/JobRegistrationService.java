@@ -112,4 +112,11 @@ public class JobRegistrationService {
                 .map(NotificationChannelResponse::from)
                 .toList();
     }
+
+    @Transactional
+    public void removeChannel(UUID id, UUID channelId) {
+        if(!jobRepository.existsById(id))
+            throw new JobNotFoundException(id);
+        channelRepository.deleteById(channelId);
+    }
 }

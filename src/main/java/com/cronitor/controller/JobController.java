@@ -75,4 +75,14 @@ public class JobController {
     public ResponseEntity<List<NotificationChannelResponse>> listChannels(@PathVariable UUID id) {
         return ResponseEntity.ok(registrationService.listChannels(id));
     }
+
+    @DeleteMapping("/{id}/channels/{channelId}")
+    @Operation(summary = "Remove a notification channel from a job.")
+    public ResponseEntity<Void> removeChannel(@PathVariable UUID id, @PathVariable UUID channelId)
+    {
+        registrationService
+                .removeChannel(id,channelId);
+        return ResponseEntity.noContent().build();
+    }
+
 }
